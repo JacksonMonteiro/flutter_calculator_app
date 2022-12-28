@@ -17,11 +17,11 @@ class DisplayComponent extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text( '${snapshot.data?.calc.firstNum}',  style: const TextStyle(fontSize: 14, color: Colors.white), ),
+              Text( snapshot.data?.calc.firstNum ?? '',  style: const TextStyle(fontSize: 14, color: Colors.white), ),
               const SizedBox(width: 4,),
-              Text( '${snapshot.data?.calc.operation}',  style: const TextStyle(fontSize: 14, color: Colors.green), ),
+              Text( snapshot.data?.calc.operation ?? '',  style: const TextStyle(fontSize: 14, color: Colors.green), ),
               const SizedBox(width: 4,),
-              Text( '${snapshot.data?.calc.secondNum}',  style: const TextStyle(fontSize: 14, color: Colors.white),),
+              Text( snapshot.data?.calc.secondNum ?? '',  style: const TextStyle(fontSize: 14, color: Colors.white),),
             ],
           ),
           const SizedBox(height: 8,),
