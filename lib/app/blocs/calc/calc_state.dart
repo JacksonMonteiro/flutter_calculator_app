@@ -6,7 +6,7 @@ abstract class CalcState {
 }
 
 class InitialCalcState extends CalcState {
-  InitialCalcState() : super(calc: CalcModel(firstNum: '', secondNum: '', operation: '', result: ''));
+  InitialCalcState() : super(calc: CalcModel(firstNum: '', secondNum: '', operation: '', result: '0'));
 }
 
 class CalcSuccessState extends CalcState {

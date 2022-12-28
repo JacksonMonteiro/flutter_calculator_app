@@ -22,22 +22,21 @@ class CalcBloc {
     if (event is AddNumEvent) {
       if (calc.firstNum.isEmpty || calc.operation.isEmpty) {
         calc.firstNum += event.num;
+        calc.result =  calc.firstNum;
       } else {
         calc.secondNum += event.num;
+        calc.result = calc.secondNum;
       }
     } else if (event is AddOperationEvent) {
       calc.operation = event.operation;
+      calc.result = '';
     } else if (event is DoCalcEvent) {
       double fn = double.parse(calc.firstNum);
       double sn = double.parse(calc.secondNum);
       _doCalc(fn, sn, calc.operation);
     }
 
-    
-    print('Número 1: ${calc.firstNum}');
-    print('Operador: ${calc.operation}');
-    print('Número 2: ${calc.secondNum}');
-    print('Resultado: ${calc.result}');
+
     _outputCalcController.add(CalcSuccessState(calc: calc));
   }
 

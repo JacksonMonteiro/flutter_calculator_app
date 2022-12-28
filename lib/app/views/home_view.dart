@@ -1,4 +1,6 @@
 import 'package:calculator/app/blocs/calc/calc_bloc.dart';
+import 'package:calculator/app/blocs/calc/calc_state.dart';
+import 'package:calculator/app/components/display_component.dart';
 import 'package:calculator/app/components/keyboard_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -31,14 +33,12 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: StreamBuilder<Object>(
+        child: StreamBuilder<CalcState>(
           stream: bloc.stream,
           builder: (context, snapshot) {
             return Column(
               children: [
-                Container(
-                  height: 200,
-                ),
+                DisplayComponent(snapshot: snapshot,),
                 KeyboardComponent(bloc: bloc,),
               ],
             );
