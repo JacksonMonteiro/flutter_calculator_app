@@ -52,7 +52,7 @@ class KeyboardComponent extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            KeyComponent(char: ',', bloc: bloc),
+            KeyComponent(char: '.', bloc: bloc, isCommaButton: true),
             KeyComponent(char: '0', bloc: bloc),
             KeyComponent(char: '=', bloc: bloc, isCalcButton: true,),
             KeyComponent(char: '+', bloc: bloc),

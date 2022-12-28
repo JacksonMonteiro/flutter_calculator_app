@@ -5,10 +5,13 @@ import 'package:calculator/app/blocs/calc/calc_state.dart';
 import 'package:calculator/app/models/calc_model.dart';
 
 class CalcBloc {
-  CalcModel calc = CalcModel(firstNum: '', secondNum: '', operation: '', result: '');
-  
-  final StreamController<CalcEvent> _inputCalcController = StreamController<CalcEvent>();
-  final StreamController<CalcState> _outputCalcController = StreamController<CalcState>();
+  CalcModel calc =
+      CalcModel(firstNum: '', secondNum: '', operation: '', result: '');
+
+  final StreamController<CalcEvent> _inputCalcController =
+      StreamController<CalcEvent>();
+  final StreamController<CalcState> _outputCalcController =
+      StreamController<CalcState>();
 
   Sink<CalcEvent> get inputCalc => _inputCalcController.sink;
   Stream<CalcState> get stream => _outputCalcController.stream;
@@ -18,53 +21,51 @@ class CalcBloc {
   }
 
   _mapEventToState(CalcEvent event) {
-
     if (event is AddNumEvent) {
-      
       if (calc.firstNum.isEmpty || calc.operation.isEmpty) {
         calc.firstNum += event.num;
-        calc.result =  calc.firstNum;
+        calc.result = calc.firstNum;
       } else {
         calc.secondNum += event.num;
         calc.result = calc.secondNum;
       }
-
     } else if (event is AddOperationEvent) {
-      
       if (calc.firstNum.isNotEmpty) {
         calc.operation = event.operation;
         calc.result = '';
       }
 
+      if (calc.operation.isNotEmpty && calc.secondNum.isNotEmpty) {
+        double fn = double.parse(calc.firstNum);
+        double sn = double.parse(calc.secondNum);
+        _doCalc(fn, sn, calc.operation);
+      }
     } else if (event is DoCalcEvent) {
-      
       double fn = double.parse(calc.firstNum);
       double sn = double.parse(calc.secondNum);
       _doCalc(fn, sn, calc.operation);
-
     } else if (event is ClearEvent) {
-
       calc.firstNum = '';
       calc.operation = '';
       calc.secondNum = '';
       calc.result = '0';
-      
     } else if (event is DelEvent) {
+      if (calc.result == '0') return;
 
       if (calc.result != '0' && calc.result.length > 1) {
-        calc.result = calc.result.substring(0, calc.result.length - 1);   
-        if (calc.operation.isEmpty) {
-          calc.firstNum = calc.firstNum.substring(0, calc.firstNum.length - 1);
-        } else {
-          calc.secondNum = calc.secondNum.substring(0, calc.secondNum.length - 1);
-        }
-
+        calc.result = calc.result.substring(0, calc.result.length - 1);
+        deleteChar();
       } else if (calc.result.length == 1) {
         calc.result = '0';
+        deleteChar();
       }
-
+    } else if (event is CommaEvent) {
+      if (calc.firstNum.isEmpty || calc.operation.isEmpty) {
+        addDecimalPoint();
+      } else {
+        addDecimalPoint();
+      }
     }
-
 
     _outputCalcController.add(CalcSuccessState(calc: calc));
   }
@@ -78,8 +79,8 @@ class CalcBloc {
     }
   }
 
-  _doCalc(double fn, double sn, String op) {
-    switch(op) {
+  void _doCalc(double fn, double sn, String op) {
+    switch (op) {
       case '/':
         calc.result = (fn / sn).toString();
         break;
@@ -94,6 +95,25 @@ class CalcBloc {
     }
 
     calc.firstNum = calc.result;
+    calc.operation = '';
     calc.secondNum = '';
+  }
+
+  void deleteChar() {
+    if (calc.operation.isEmpty) {
+      calc.firstNum = calc.firstNum.substring(0, calc.firstNum.length - 1);
+    } else {
+      calc.secondNum = calc.secondNum.substring(0, calc.secondNum.length - 1);
+    }
+  }
+
+  void addDecimalPoint() {
+    if (!calc.firstNum.contains(".")) {
+      calc.firstNum += ".";
+      calc.result = calc.firstNum;
+    } else if (!calc.secondNum.contains(".")) {
+      calc.secondNum += ".";
+      calc.result = calc.secondNum;
+    }
   }
 }

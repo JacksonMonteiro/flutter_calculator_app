@@ -15,3 +15,5 @@ class DoCalcEvent extends CalcEvent {}
 class ClearEvent extends CalcEvent {}
 
 class DelEvent extends CalcEvent {}
+
+class CommaEvent extends CalcEvent {}
