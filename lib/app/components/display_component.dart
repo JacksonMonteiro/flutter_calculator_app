@@ -10,11 +10,11 @@ class DisplayComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.25,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text('${snapshot.data?.calc.result ?? '0'}', style: TextStyle(fontSize: 18),)
+          Text('${snapshot.data?.calc.result ?? '0'}', style: TextStyle(fontSize: 24),)
         ],
       ),
     );

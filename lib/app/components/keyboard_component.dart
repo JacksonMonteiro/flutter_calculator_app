@@ -9,28 +9,56 @@ class KeyboardComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.6,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              KeyComponent(char: '1', bloc: bloc,),
-              KeyComponent(char: '2', bloc: bloc,),
-              KeyComponent(char: '3', bloc: bloc,),
-              KeyComponent(char: 'X', bloc: bloc,),
-            ],
-          ),
-          const SizedBox(height: 32,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              KeyComponent(char: '=', bloc: bloc, isCalcButton: true,),
-            ],
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            KeyComponent(char: 'C', bloc: bloc, isClearButton: true,),
+            KeyComponent(char: 'DEL', bloc: bloc,),
+          ],
+        ),
+        const SizedBox(height: 32,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            KeyComponent(char: '7', bloc: bloc,),
+            KeyComponent(char: '8', bloc: bloc,),
+            KeyComponent(char: '9', bloc: bloc,),
+            KeyComponent(char: '/', bloc: bloc,),
+          ],
+        ),
+        const SizedBox(height: 32,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            KeyComponent(char: '4', bloc: bloc),
+            KeyComponent(char: '5', bloc: bloc),
+            KeyComponent(char: '6', bloc: bloc),
+            KeyComponent(char: 'X', bloc: bloc),
+          ],
+        ),
+        const SizedBox(height: 32,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            KeyComponent(char: '1', bloc: bloc),
+            KeyComponent(char: '2', bloc: bloc),
+            KeyComponent(char: '3', bloc: bloc),
+            KeyComponent(char: '-', bloc: bloc),
+          ],
+        ),
+        const SizedBox(height: 32,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            KeyComponent(char: ',', bloc: bloc),
+            KeyComponent(char: '0', bloc: bloc),
+            KeyComponent(char: '=', bloc: bloc, isCalcButton: true,),
+            KeyComponent(char: '+', bloc: bloc),
+          ],
+        ),
+      ],
     );
   }
 }

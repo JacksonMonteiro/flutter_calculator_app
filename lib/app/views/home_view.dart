@@ -3,8 +3,6 @@ import 'package:calculator/app/blocs/calc/calc_state.dart';
 import 'package:calculator/app/components/display_component.dart';
 import 'package:calculator/app/components/keyboard_component.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -32,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(32.0),
         child: StreamBuilder<CalcState>(
           stream: bloc.stream,
           builder: (context, snapshot) {

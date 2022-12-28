@@ -11,3 +11,5 @@ class AddOperationEvent extends CalcEvent {
 }
 
 class DoCalcEvent extends CalcEvent {}
+
+class ClearEvent extends CalcEvent {}

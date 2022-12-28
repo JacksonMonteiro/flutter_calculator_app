@@ -20,6 +20,7 @@ class CalcBloc {
   _mapEventToState(CalcEvent event) {
 
     if (event is AddNumEvent) {
+      
       if (calc.firstNum.isEmpty || calc.operation.isEmpty) {
         calc.firstNum += event.num;
         calc.result =  calc.firstNum;
@@ -27,13 +28,25 @@ class CalcBloc {
         calc.secondNum += event.num;
         calc.result = calc.secondNum;
       }
+
     } else if (event is AddOperationEvent) {
+      
       calc.operation = event.operation;
       calc.result = '';
+
     } else if (event is DoCalcEvent) {
+      
       double fn = double.parse(calc.firstNum);
       double sn = double.parse(calc.secondNum);
       _doCalc(fn, sn, calc.operation);
+
+    } else if (event is ClearEvent) {
+
+      calc.firstNum = '';
+      calc.operation = '';
+      calc.secondNum = '';
+      calc.result = '0';
+      
     }
 
 
@@ -51,9 +64,20 @@ class CalcBloc {
 
   _doCalc(double fn, double sn, String op) {
     switch(op) {
+      case '/':
+        calc.result = (fn / sn).toString();
+        break;
       case 'X':
         calc.result = (fn * sn).toString();
         break;
+      case '-':
+        calc.result = (fn - sn).toString();
+        break;
+      case '+':
+        calc.result = (fn + sn).toString();
     }
+
+    calc.firstNum = calc.result;
+    calc.secondNum = '';
   }
 }

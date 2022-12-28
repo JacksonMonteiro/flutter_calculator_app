@@ -6,12 +6,14 @@ class KeyComponent extends StatelessWidget {
   final String char;
   final CalcBloc bloc;
   final bool isCalcButton;
+  final bool isClearButton;
 
   const KeyComponent(
       {super.key,
       required this.char,
       required this.bloc,
-      this.isCalcButton = false});
+      this.isCalcButton = false,
+      this.isClearButton = false});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +23,16 @@ class KeyComponent extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32))),
       onPressed: () {
-        if (!isCalcButton) {
+        if (isCalcButton) {
+          bloc.inputCalc.add(DoCalcEvent());
+        } else if (isClearButton) {
+          bloc.inputCalc.add(ClearEvent());
+        } else {
           if (bloc.checkChar(char)) {
             bloc.inputCalc.add(AddNumEvent(num: char));
           } else {
             bloc.inputCalc.add(AddOperationEvent(operation: char));
           }
-        } else {
-          bloc.inputCalc.add(DoCalcEvent());
         }
       },
       child: Text(char),
