@@ -31,8 +31,10 @@ class CalcBloc {
 
     } else if (event is AddOperationEvent) {
       
-      calc.operation = event.operation;
-      calc.result = '';
+      if (calc.firstNum.isNotEmpty) {
+        calc.operation = event.operation;
+        calc.result = '';
+      }
 
     } else if (event is DoCalcEvent) {
       
@@ -47,6 +49,20 @@ class CalcBloc {
       calc.secondNum = '';
       calc.result = '0';
       
+    } else if (event is DelEvent) {
+
+      if (calc.result != '0' && calc.result.length > 1) {
+        calc.result = calc.result.substring(0, calc.result.length - 1);   
+        if (calc.operation.isEmpty) {
+          calc.firstNum = calc.firstNum.substring(0, calc.firstNum.length - 1);
+        } else {
+          calc.secondNum = calc.secondNum.substring(0, calc.secondNum.length - 1);
+        }
+
+      } else if (calc.result.length == 1) {
+        calc.result = '0';
+      }
+
     }
 
 

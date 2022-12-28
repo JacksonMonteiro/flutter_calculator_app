@@ -15,7 +15,7 @@ class KeyboardComponent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             KeyComponent(char: 'C', bloc: bloc, isClearButton: true,),
-            KeyComponent(char: 'DEL', bloc: bloc,),
+            KeyComponent(char: 'DEL', bloc: bloc, isDelButton: true,),
           ],
         ),
         const SizedBox(height: 32,),

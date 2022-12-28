@@ -7,13 +7,15 @@ class KeyComponent extends StatelessWidget {
   final CalcBloc bloc;
   final bool isCalcButton;
   final bool isClearButton;
+  final bool isDelButton;
 
   const KeyComponent(
       {super.key,
       required this.char,
       required this.bloc,
       this.isCalcButton = false,
-      this.isClearButton = false});
+      this.isClearButton = false,
+      this.isDelButton = false});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,8 @@ class KeyComponent extends StatelessWidget {
           bloc.inputCalc.add(DoCalcEvent());
         } else if (isClearButton) {
           bloc.inputCalc.add(ClearEvent());
+        } else if (isDelButton) {
+          bloc.inputCalc.add(DelEvent());
         } else {
           if (bloc.checkChar(char)) {
             bloc.inputCalc.add(AddNumEvent(num: char));
