@@ -29,18 +29,24 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: StreamBuilder<CalcState>(
-          stream: bloc.stream,
-          builder: (context, snapshot) {
-            return Column(
-              children: [
-                DisplayComponent(snapshot: snapshot,),
-                KeyboardComponent(bloc: bloc,),
-              ],
-            );
-          }
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: const Color(0xFF242424),
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: StreamBuilder<CalcState>(
+            stream: bloc.stream,
+            builder: (context, snapshot) {
+              return Column(
+                children: [
+                  DisplayComponent(snapshot: snapshot,),
+                  const  SizedBox(height: 32,),
+                  KeyboardComponent(bloc: bloc,),
+                ],
+              );
+            }
+          ),
         ),
       ),
     );

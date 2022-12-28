@@ -5,13 +5,10 @@ import 'package:calculator/app/blocs/calc/calc_state.dart';
 import 'package:calculator/app/models/calc_model.dart';
 
 class CalcBloc {
-  CalcModel calc =
-      CalcModel(firstNum: '', secondNum: '', operation: '', result: '');
+  CalcModel calc = CalcModel(firstNum: '', secondNum: '', operation: '', result: '');
 
-  final StreamController<CalcEvent> _inputCalcController =
-      StreamController<CalcEvent>();
-  final StreamController<CalcState> _outputCalcController =
-      StreamController<CalcState>();
+  final StreamController<CalcEvent> _inputCalcController = StreamController<CalcEvent>();
+  final StreamController<CalcState> _outputCalcController = StreamController<CalcState>();
 
   Sink<CalcEvent> get inputCalc => _inputCalcController.sink;
   Stream<CalcState> get stream => _outputCalcController.stream;
@@ -30,6 +27,7 @@ class CalcBloc {
         calc.result = calc.secondNum;
       }
     } else if (event is AddOperationEvent) {
+      
       if (calc.firstNum.isNotEmpty) {
         calc.operation = event.operation;
         calc.result = '';
@@ -38,12 +36,13 @@ class CalcBloc {
       if (calc.operation.isNotEmpty && calc.secondNum.isNotEmpty) {
         double fn = double.parse(calc.firstNum);
         double sn = double.parse(calc.secondNum);
-        _doCalc(fn, sn, calc.operation);
+        _doCalc(calc.firstNum, calc.secondNum, calc.operation);
       }
+
     } else if (event is DoCalcEvent) {
-      double fn = double.parse(calc.firstNum);
-      double sn = double.parse(calc.secondNum);
-      _doCalc(fn, sn, calc.operation);
+      
+      _doCalc(calc.firstNum, calc.secondNum, calc.operation);
+
     } else if (event is ClearEvent) {
       calc.firstNum = '';
       calc.operation = '';
@@ -60,11 +59,13 @@ class CalcBloc {
         deleteChar();
       }
     } else if (event is CommaEvent) {
-      if (calc.firstNum.isEmpty || calc.operation.isEmpty) {
+      
+      if (calc.firstNum.isNotEmpty && calc.operation.isEmpty) {
         addDecimalPoint();
-      } else {
+      } else if (calc.secondNum.isNotEmpty) {
         addDecimalPoint();
       }
+
     }
 
     _outputCalcController.add(CalcSuccessState(calc: calc));
@@ -79,7 +80,25 @@ class CalcBloc {
     }
   }
 
-  void _doCalc(double fn, double sn, String op) {
+  void _doCalc(String firstNum, String secondNum, String op) {
+    // Numbers
+    dynamic fn = 0.0;
+    dynamic sn = 0.0;
+    
+    // Convert
+    if (int.tryParse(firstNum) != null) {
+      fn = int.parse(firstNum);
+    } else {
+      fn = double.parse(firstNum);
+    }
+
+    if (int.tryParse(secondNum) != null) {
+      sn = int.parse(secondNum);
+    } else {
+      sn = double.parse(secondNum);
+    }
+    
+    
     switch (op) {
       case '/':
         calc.result = (fn / sn).toString();
@@ -108,7 +127,7 @@ class CalcBloc {
   }
 
   void addDecimalPoint() {
-    if (!calc.firstNum.contains(".")) {
+    if (!calc.firstNum.contains(".") && calc.operation.isEmpty) {
       calc.firstNum += ".";
       calc.result = calc.firstNum;
     } else if (!calc.secondNum.contains(".")) {
@@ -116,4 +135,5 @@ class CalcBloc {
       calc.result = calc.secondNum;
     }
   }
+
 }

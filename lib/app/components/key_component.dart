@@ -9,6 +9,7 @@ class KeyComponent extends StatelessWidget {
   final bool isClearButton;
   final bool isDelButton;
   final bool isCommaButton;
+  final bool isOperandButton;
 
   const KeyComponent(
       {super.key,
@@ -17,15 +18,16 @@ class KeyComponent extends StatelessWidget {
       this.isCalcButton = false,
       this.isClearButton = false,
       this.isDelButton = false,
-      this.isCommaButton = false});
+      this.isCommaButton = false, 
+      this.isOperandButton = false});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
           fixedSize: const Size(64.0, 64.0),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32))),
+          backgroundColor: (isOperandButton || isCalcButton || isCommaButton || isClearButton) ? Colors.green : isDelButton ? Colors.red : Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0))),
       onPressed: () {
         if (isCalcButton) {
           bloc.inputCalc.add(DoCalcEvent());
@@ -43,7 +45,10 @@ class KeyComponent extends StatelessWidget {
           }
         }
       },
-      child: Text(char),
+      child: Text(char, style: TextStyle(
+        fontSize: 18, 
+        color:  Colors.black
+      )),
     );
   }
 }
