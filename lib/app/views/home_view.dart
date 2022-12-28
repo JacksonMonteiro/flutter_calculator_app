@@ -34,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
         height: double.infinity,
         color: const Color(0xFF242424),
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
           child: StreamBuilder<CalcState>(
             stream: bloc.stream,
             builder: (context, snapshot) {
